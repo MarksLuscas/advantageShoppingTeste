@@ -13,6 +13,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class RegisterPage {
@@ -64,15 +65,20 @@ public class RegisterPage {
 		segundoNome.sendKeys(sheet.getRow(numeroLinha).getCell(5).getStringCellValue());
 		telefone.sendKeys(sheet.getRow(numeroLinha).getCell(6).getStringCellValue());
 		
-		wait.until(ExpectedConditions.
-				elementToBeClickable(By.name("countryListboxRegisterPage"))).click();
 		
-		//ESCOLHER A OPCAO DE BRAZIL			
-			wait.until(ExpectedConditions.
-					elementToBeClickable(By.xpath(""
-							+ "/html/body/div[3]/section/article/"
-							+ "sec-form/div[1]/div[2]/div/div[3]/"
-							+ "div[1]/sec-view[1]/div/select/option[30]"))).click();
+//		//ESCOLHER A OPCAO DE BRAZIL			
+//			wait.until(ExpectedConditions.
+//					elementToBeClickable(By.xpath(""
+//							+ "/html/body/div[3]/section/article/"
+//							+ "sec-form/div[1]/div[2]/div/div[3]/"
+//							+ "div[1]/sec-view[1]/div/select/option[30]"))).click();
+		WebElement lista = browser.findElement(By.name("countryListboxRegisterPage"));
+		lista.click();
+	
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("option[label='Afganistan']")));
+
+		Select select = new Select(lista);
+		select.selectByVisibleText("Brazil");
 				
 		cidade.sendKeys(sheet.getRow(numeroLinha).getCell(7).getStringCellValue());
 		endereco.sendKeys(sheet.getRow(numeroLinha).getCell(8).getStringCellValue());

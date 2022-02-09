@@ -2,15 +2,16 @@
 
 Funcionalidade: Login de Usuario
   
-  Cenario: Login Completo
-  Dado usuario vai para o site
+  Contexto:
+    Dado usuario vai para o site
   Quando o usuario clica para fazer login
+  
+  
+  Cenario: Login Completo
  	E coloca seus dados
   Entao aparece logado na sua conta
 
   Cenario: Login Incompleto
-  Dado usuario vai para o site
-  Quando o usuario clica para fazer login
- 	E coloca os dados
+ 	E coloca os dados invalidos
   Entao recebe uma mensagem de erro
 	
