@@ -3,10 +3,9 @@
 Funcionalidade: Login de Usuario
   
   Contexto:
-    Dado usuario vai para o site
+  Dado usuario vai para o site
   Quando o usuario clica para fazer login
-  
-  
+    
   Cenario: Login Completo
  	E coloca seus dados
   Entao aparece logado na sua conta

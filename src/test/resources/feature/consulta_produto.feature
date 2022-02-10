@@ -3,7 +3,7 @@
 Funcionalidade: Consultar Produto pela tela principal, utilizando a campo de pesquisa.
   
   Contexto:
-   Dado usuario esta no site  							 
+  Dado usuario esta no site  							 
   E ele clica para fazer uma consulta de um produto
   
   

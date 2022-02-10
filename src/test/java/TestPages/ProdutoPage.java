@@ -7,6 +7,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -18,14 +21,19 @@ public class ProdutoPage {
 	public ProdutoPage(WebDriver browser) {
 		this.browser = browser;
 		wait = new WebDriverWait(browser, Duration.ofSeconds(10));
+		PageFactory.initElements(browser, this);
+
 	}
-				
-	public boolean verificaProduto() {		
-			
-		boolean descricao =  wait.until(ExpectedConditions.
-				visibilityOfElementLocated(By.id("Description"))).isDisplayed();    			
 	
-	 return descricao;
+	@FindBy(how = How.ID, using = "Description")
+	private WebElement description;	
+		
+	public boolean verificaProduto() {		
+					
+		boolean descricao = wait.until(ExpectedConditions.
+										visibilityOf(description)).isDisplayed();    			
+	
+		return descricao;
 }
 	public boolean mensagemDeProdutoInexistente() {
 	

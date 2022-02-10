@@ -6,8 +6,7 @@ Funcionalidade: Cadastro de Usuario
   Dado usuario vai para o site escolhido  
   Quando o usuario clica para fazer login no site
   E como nao tem uma conta ele clica para criar uma nova
-  
-  
+    
   Cenario: Cadastro Completo
   E coloca seus dados na pagina de cadastro
   Entao volta para a pagina ja logado

@@ -8,6 +8,7 @@ import org.junit.Assert;
 import TestPages.HomePage;
 import TestPages.LoginPage;
 import TestPages.RegisterPage;
+import io.cucumber.java.After;
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.E;
 import io.cucumber.java.pt.Entao;
@@ -26,8 +27,7 @@ public class CadastroSteps {
 	
 	@Dado("usuario vai para o site escolhido")
 	public void usuario_vai_para_o_site_escolhido() {
-		homePage.paginaInicial();
-		
+		homePage.paginaInicial();	
 	}
 	
 	@Quando("o usuario clica para fazer login no site")
@@ -44,10 +44,10 @@ public class CadastroSteps {
 	public void coloca_seus_dados_na_pagina_de_cadastro() {
 		registerPage.preencheOsDados(1);
 	}
+	
 	@Entao("volta para a pagina ja logado")
 	public void volta_para_a_pagina_ja_logado()  {
 		Assert.assertTrue(registerPage.estaLogadoComOCadastroNovo());	
-		homePage.sairDoBrowser();
 	}
 
 	
@@ -61,7 +61,6 @@ public class CadastroSteps {
 	@Entao("recebe uma mensagem de email invalido")
 	public void recebe_uma_mensagem_de_email_invalido() {
 		registerPage.mensagemDeEmailInvalido();
-		homePage.sairDoBrowser();
 	}
 
 	
@@ -75,8 +74,11 @@ public class CadastroSteps {
 	@Entao("aparece algumas mensagens de erros nos outros campos obrigatorios")
 	public void aparece_algumas_mensagens_de_erros_nos_outros_campos_obrigatorios() {
 		Assert.assertTrue(registerPage.mensagensDeErro());
+	}
+	
+	@After
+	public void tearDown() {
 		homePage.sairDoBrowser();
 	}
-
 	
 }

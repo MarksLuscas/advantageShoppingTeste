@@ -10,6 +10,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -32,39 +35,44 @@ public class LoginPage {
 	public LoginPage(WebDriver browser)  throws IOException {
 		this.browser = browser;
 		wait = new WebDriverWait(browser, Duration.ofSeconds(10));
+		PageFactory.initElements(browser, this);
+
 	}
 	
+	@FindBy(how = How.LINK_TEXT, using = "CREATE NEW ACCOUNT")
+	private WebElement criarNovaConta;	
+	
+	@FindBy(how = How.NAME, using = "username")
+	private WebElement nomeUsuario;	
+		
+	@FindBy(how = How.NAME, using = "password")
+	private WebElement senhaUsuario;	
+	
+	@FindBy(how = How.ID, using = "sign_in_btnundefined")
+	private WebElement btnLogin;	
+	
+	@FindBy(how = How.ID, using = "signInResultMessage")
+	private WebElement msgDeLoginErrado;
 	
 	public RegisterPage clicaParaIrParaAPaginaDeCadastro() throws IOException {
 							
-			wait.until(ExpectedConditions
-					.elementToBeClickable
-					(By.linkText("CREATE NEW ACCOUNT"))).click();
-			
-			return new RegisterPage(browser);	
+		wait.until(ExpectedConditions.elementToBeClickable(criarNovaConta)).click();
+		
+		return new RegisterPage(browser);	
 	}
 
-
 	public void preencheComOsDados(int numeroLinha) {
-		
-		WebElement username = 
-				wait.until(ExpectedConditions.elementToBeClickable
-						(By.name("username")));
-		
-		WebElement password = browser.findElement(By.name("password"));
-				
-		username.sendKeys(sheet.getRow(numeroLinha).getCell(0).getStringCellValue());
-		password.sendKeys(sheet.getRow(numeroLinha).getCell(1).getStringCellValue());
+					
+		nomeUsuario.sendKeys(sheet.getRow(numeroLinha).getCell(0).getStringCellValue());
+		senhaUsuario.sendKeys(sheet.getRow(numeroLinha).getCell(1).getStringCellValue());
 	
-		browser.findElement(By.id("sign_in_btnundefined")).click();
-	
-	
+		btnLogin.click();	
 	}
 	
 	public boolean loginErrado() {
 		
 		boolean msgDeErro = wait.until(ExpectedConditions.
-				visibilityOfElementLocated(By.id("signInResultMessage"))).isDisplayed();
+									visibilityOf(msgDeLoginErrado)).isDisplayed();
 				
 		return msgDeErro;
 	}

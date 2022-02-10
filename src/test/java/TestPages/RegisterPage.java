@@ -12,6 +12,9 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -21,6 +24,11 @@ public class RegisterPage {
 	private WebDriver browser;
 	private WebDriverWait wait;
 	
+	public RegisterPage(WebDriver browser) throws IOException {
+		this.browser = browser;
+		wait = new WebDriverWait(browser, Duration.ofSeconds(10));
+		PageFactory.initElements(browser, this);
+	}
 
 	File file = new File("C:\\Users\\lucas.corticeiro\\eclipse-workspace\\AdvantageTestes\\src\\test\\resources\\excelUtil\\paginaUsuario.xlsx");
 
@@ -32,52 +40,68 @@ public class RegisterPage {
 	
 	int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();	
 	
+	//FIND BY
 	
-	public RegisterPage(WebDriver browser) throws IOException {
-		this.browser = browser;
-		wait = new WebDriverWait(browser, Duration.ofSeconds(10));
-	}
-		
+	@FindBy(how = How.NAME, using = "usernameRegisterPage") 
+	private WebElement nome;
 	
-	public void preencheOsDados(int numeroLinha) {
-				
-	WebElement nome = wait.until(
-				ExpectedConditions.elementToBeClickable
-				(By.name("usernameRegisterPage")));
+	@FindBy(how = How.NAME, using = "emailRegisterPage") 
+	private WebElement email;
 	
-	WebElement email = browser.findElement(By.name("emailRegisterPage"));
-	WebElement senha = browser.findElement(By.name("passwordRegisterPage"));
-	WebElement confirmaSenha =	browser.findElement(By.name("confirm_passwordRegisterPage"));
-	WebElement primeiroNome = browser.findElement(By.name("first_nameRegisterPage"));
-	WebElement segundoNome = browser.findElement(By.name("last_nameRegisterPage"));
-	WebElement telefone = browser.findElement(By.name("phone_numberRegisterPage"));		
-	WebElement cidade =	browser.findElement(By.name("cityRegisterPage"));
-	WebElement endereco = browser.findElement(By.name("addressRegisterPage"));
-	WebElement estado =	browser.findElement(By.name("state_/_province_/_regionRegisterPage"));
-	WebElement codigoPostal = browser.findElement(By.name("postal_codeRegisterPage"));
-		
+	@FindBy(how = How.NAME, using ="passwordRegisterPage") 
+	private WebElement senha;
+	
+	@FindBy(how = How.NAME, using ="confirm_passwordRegisterPage") 
+	private WebElement confirmaSenha;
+	
+	@FindBy(how = How.NAME, using = "first_nameRegisterPage") 
+	private WebElement primeiroNome;
+	
+	@FindBy(how = How.NAME, using = "last_nameRegisterPage") 
+	private WebElement segundoNome;
+	
+	@FindBy(how = How.NAME, using = "phone_numberRegisterPage") 
+	private WebElement telefone;
+	
+	@FindBy(how = How.NAME, using = "cityRegisterPage")
+	private WebElement cidade ;
+	
+	@FindBy(how = How.NAME, using = "addressRegisterPage")
+	private WebElement endereco;
+	
+	@FindBy(how = How.NAME, using ="state_/_province_/_regionRegisterPage")
+	private WebElement estado;
+	
+	@FindBy(how = How.NAME, using = "postal_codeRegisterPage")
+	private WebElement codigoPostal;
+	
+	@FindBy(how = How.NAME, using = "i_agree")
+	private WebElement i_agreeBtn;
+	
+	@FindBy(how = How.ID, using = "register_btnundefined")
+	private WebElement registerBtn;
 
-		nome.sendKeys(sheet.getRow(numeroLinha).getCell(0).getStringCellValue());
+	@FindBy(how = How.NAME, using = "countryListboxRegisterPage")
+	private WebElement countryListBox;
+	
+	//METODOS	
+	public void preencheOsDados(int numeroLinha) {
+		wait.until(ExpectedConditions.
+				elementToBeClickable(nome)).
+						sendKeys(sheet.getRow(numeroLinha).getCell(0).getStringCellValue());
 		email.sendKeys(sheet.getRow(numeroLinha).getCell(1).getStringCellValue());
 		senha.sendKeys(sheet.getRow(numeroLinha).getCell(2).getStringCellValue());
 		confirmaSenha.sendKeys(sheet.getRow(numeroLinha).getCell(3).getStringCellValue());
 		primeiroNome.sendKeys(sheet.getRow(numeroLinha).getCell(4).getStringCellValue());
 		segundoNome.sendKeys(sheet.getRow(numeroLinha).getCell(5).getStringCellValue());
 		telefone.sendKeys(sheet.getRow(numeroLinha).getCell(6).getStringCellValue());
-		
-		
-//		//ESCOLHER A OPCAO DE BRAZIL			
-//			wait.until(ExpectedConditions.
-//					elementToBeClickable(By.xpath(""
-//							+ "/html/body/div[3]/section/article/"
-//							+ "sec-form/div[1]/div[2]/div/div[3]/"
-//							+ "div[1]/sec-view[1]/div/select/option[30]"))).click();
-		WebElement lista = browser.findElement(By.name("countryListboxRegisterPage"));
-		lista.click();
-	
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("option[label='Afganistan']")));
 
-		Select select = new Select(lista);
+		countryListBox.click();
+	
+		wait.until(ExpectedConditions.visibilityOfElementLocated(
+							By.cssSelector("option[label='Afganistan']")));
+
+		Select select = new Select(countryListBox);
 		select.selectByVisibleText("Brazil");
 				
 		cidade.sendKeys(sheet.getRow(numeroLinha).getCell(7).getStringCellValue());
@@ -87,13 +111,11 @@ public class RegisterPage {
 
 	
 	//BOTAO DE CONFIRMA A CONDICAO DE PRIVACIDADE 
-	browser.findElement(
-				By.name("i_agree")).click();
+	i_agreeBtn.click();
 	
 	//BOTAO DE REGISTRAR			
 	wait.until(
-			ExpectedConditions.elementToBeClickable(
-					By.id("register_btnundefined"))).click();
+			ExpectedConditions.elementToBeClickable(registerBtn)).click();
 			
 	}
 
@@ -140,22 +162,18 @@ public class RegisterPage {
 		
 		Actions action = new Actions(browser);
 		
-		wait.until(ExpectedConditions.elementToBeClickable
-				(By.name("usernameRegisterPage"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(nome)).click();
+//		nome.click();
 			
 		action.sendKeys(Keys.TAB);
-						
-		WebElement email = wait.until(ExpectedConditions.elementToBeClickable
-				(By.name("emailRegisterPage")));
-
+		
 		email.sendKeys(sheet.getRow(numeroLinha).getCell(0).getStringCellValue());
 				
 		action.sendKeys(Keys.TAB);
 		
 		action.sendKeys(Keys.TAB);
 		
-		action.moveToElement(browser.findElement(
-				By.name("emailRegisterPage"))).click();
+		action.moveToElement(email).click();
 		
 		action.build().perform();
 		

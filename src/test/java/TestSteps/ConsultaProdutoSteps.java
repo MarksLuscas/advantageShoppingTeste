@@ -4,6 +4,7 @@ import org.junit.Assert;
 
 import TestPages.HomePage;
 import TestPages.ProdutoPage;
+import io.cucumber.java.After;
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.E;
 import io.cucumber.java.pt.Entao;
@@ -37,7 +38,7 @@ public class ConsultaProdutoSteps {
 	@Entao("vai para a pagina do mesmo")
 	public void vai_para_a_pagina_do_mesmo() {		
 		Assert.assertTrue(produtoPage.verificaProduto());
-		homePage.sairDoBrowser();
+
 	}
 	
 		//SEGUNDO CENARIO
@@ -51,6 +52,11 @@ public class ConsultaProdutoSteps {
 	@Entao("vai para uma pagina com uma mensagem de erro")
 	public void vai_para_uma_paginacom_uma_mensagem_de_erro() {	
 		Assert.assertTrue(produtoPage.mensagemDeProdutoInexistente());
+		
+	}
+	
+	@After
+	public void tearDown() {
 		homePage.sairDoBrowser();
 	}
 
