@@ -3,27 +3,28 @@ package TestPages;
 import java.io.IOException;
 import java.time.Duration;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+
+import managers.FileReaderManager;
+
 public class HomePage {
 	
 	private WebDriver browser;
 	private WebDriverWait wait;
-	
-	public HomePage() {
-		System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
-		browser = new ChromeDriver();
+	 
+	public HomePage(WebDriver browser) {
+		this.browser = browser;
 		wait = new WebDriverWait(browser, Duration.ofSeconds(10));
 		PageFactory.initElements(browser, this);
+
 	}
 	
 	@FindBy(how = How.XPATH, using = "/html/body/div[2]")
@@ -35,7 +36,7 @@ public class HomePage {
 	@FindBy(how = How.ID, using = "autoComplete")
 	private WebElement autoComplete;
 	
-	@FindBy(how = How.CSS, using = "img[data-ng-src='/catalog/fetchImage?image_id=1700']")
+	@FindBy(how = How.CSS, using = ".product.ng-scope")
 	private WebElement produtoNoMenu;
 	
 	@FindBy(how = How.ID, using = "menuUserLink")
@@ -46,7 +47,7 @@ public class HomePage {
 	
 	
 	public void paginaInicial() {
-		browser.get("https://advantageonlineshopping.com/#/");
+		browser.get(FileReaderManager.getInstance().getConfigReader().getApplicationUrl());
 		browser.manage().window().maximize();
 	}
 	
@@ -59,16 +60,24 @@ public class HomePage {
 		return new LoginPage(browser);
 	}
 
-	public ProdutoPage pesquisaItem(String produto) {
+	public ProdutoPage pesquisaItem(String produto){
+		
+		//vai para pagina direto pela URL
+//		browser.get(FileReaderManager.getInstance().getConfigReader().getApplicationUrl() + "product/7");
 				
 		autoComplete.sendKeys(produto);
 		
 		wait.until(ExpectedConditions.invisibilityOf(logger));
-	
-	 	wait.until(ExpectedConditions.elementToBeClickable(produtoNoMenu)).click();
 				
-	 	return new ProdutoPage(browser);
-   }
+		wait.until(ExpectedConditions.elementToBeClickable(produtoNoMenu)).click();
+		
+		autoComplete.clear();
+		autoComplete.sendKeys(produto);
+		
+		wait.until(ExpectedConditions.elementToBeClickable(produtoNoMenu)).click();
+		
+	   	return new ProdutoPage(browser);	
+}
 
 	public ProdutoPage pesquisaItemErrado(String produto) {
 			
@@ -76,10 +85,6 @@ public class HomePage {
 		autoComplete.sendKeys(Keys.ENTER);	
 		
 		return new ProdutoPage(browser);
-	}
-	
-	public void sairDoBrowser() {
-		browser.close();
 	}
 
 	public boolean estaLogado() {

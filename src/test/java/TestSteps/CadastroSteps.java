@@ -4,29 +4,42 @@ package TestSteps;
 import java.io.IOException;
 
 import org.junit.Assert;
+import org.openqa.selenium.WebDriver;
 
 import TestPages.HomePage;
 import TestPages.LoginPage;
 import TestPages.RegisterPage;
+import dataProvider.ConfigFileReader;
 import io.cucumber.java.After;
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.E;
 import io.cucumber.java.pt.Entao;
 import io.cucumber.java.pt.Quando;
+import managers.PageObjectManager;
+import managers.WebDriverManager;
 
 public class CadastroSteps {
 		
 	private HomePage homePage;
 	private RegisterPage registerPage;
 	private LoginPage loginPage;
-	
-	
-	public CadastroSteps() {
-		homePage = new HomePage();
-	}
-	
+	private WebDriver browser;
+	private PageObjectManager pageObjectManager;
+	private WebDriverManager webDriverManager;
+		
 	@Dado("usuario vai para o site escolhido")
 	public void usuario_vai_para_o_site_escolhido() {
+		//instanciando o fileReader
+		webDriverManager = new WebDriverManager();
+		
+		//instanciando o driver
+		browser = webDriverManager.getDriver();
+		
+		//incializando a HomePage
+		pageObjectManager = new PageObjectManager(browser);
+		homePage = pageObjectManager.getHomePage();
+			
+		//indo para a homePage pelo driver
 		homePage.paginaInicial();	
 	}
 	
@@ -47,7 +60,8 @@ public class CadastroSteps {
 	
 	@Entao("volta para a pagina ja logado")
 	public void volta_para_a_pagina_ja_logado()  {
-		Assert.assertTrue(registerPage.estaLogadoComOCadastroNovo());	
+		Assert.assertTrue(registerPage.estaLogadoComOCadastroNovo());
+		webDriverManager.closeDriver();
 	}
 
 	
@@ -61,6 +75,7 @@ public class CadastroSteps {
 	@Entao("recebe uma mensagem de email invalido")
 	public void recebe_uma_mensagem_de_email_invalido() {
 		registerPage.mensagemDeEmailInvalido();
+		webDriverManager.closeDriver();	
 	}
 
 	
@@ -74,11 +89,6 @@ public class CadastroSteps {
 	@Entao("aparece algumas mensagens de erros nos outros campos obrigatorios")
 	public void aparece_algumas_mensagens_de_erros_nos_outros_campos_obrigatorios() {
 		Assert.assertTrue(registerPage.mensagensDeErro());
+		webDriverManager.closeDriver();
 	}
-	
-	@After
-	public void tearDown() {
-		homePage.sairDoBrowser();
-	}
-	
 }

@@ -19,19 +19,25 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import dataProvider.ConfigFileReader;
+
 public class RegisterPage {
 		
 	private WebDriver browser;
 	private WebDriverWait wait;
+//	private ConfigFileReader configFileReader;
+	
 	
 	public RegisterPage(WebDriver browser) throws IOException {
 		this.browser = browser;
 		wait = new WebDriverWait(browser, Duration.ofSeconds(10));
 		PageFactory.initElements(browser, this);
+//		configFileReader = new ConfigFileReader();
 	}
 
 	File file = new File("C:\\Users\\lucas.corticeiro\\eclipse-workspace\\AdvantageTestes\\src\\test\\resources\\excelUtil\\paginaUsuario.xlsx");
-
+	//path original -> C:\\Users\\lucas.corticeiro\\eclipse-workspace\\AdvantageTestes\\src\\test\\resources\\excelUtil\\paginaUsuario.xlsx
+		
 	FileInputStream inputStream = new FileInputStream(file);
 	
 	XSSFWorkbook wb = new XSSFWorkbook(inputStream);

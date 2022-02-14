@@ -7,7 +7,6 @@ import java.time.Duration;
 
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,13 +15,23 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import dataProvider.ConfigFileReader;
+
 public class LoginPage {
 	
 	private WebDriverWait wait;
 	private WebDriver browser;
-	
-	File file = new File("C:\\Users\\lucas.corticeiro\\eclipse-workspace\\AdvantageTestes\\src\\test\\resources\\excelUtil\\loginUsuario.xlsx");
+	//private ConfigFileReader configFileReader;
 
+	public LoginPage(WebDriver browser)  throws IOException {
+		this.browser = browser;
+		wait = new WebDriverWait(browser, Duration.ofSeconds(10));
+		PageFactory.initElements(browser, this);
+//		configFileReader = new ConfigFileReader();
+	}
+
+	File file = new File("C:\\Users\\lucas.corticeiro\\eclipse-workspace\\AdvantageTestes\\src\\test\\resources\\excelUtil\\loginUsuario.xlsx");
+	//path original -> C:\\Users\\lucas.corticeiro\\eclipse-workspace\\AdvantageTestes\\src\\test\\resources\\excelUtil\\loginUsuario.xlsx
 	FileInputStream inputStream = new FileInputStream(file);
 	
 	XSSFWorkbook wb = new XSSFWorkbook(inputStream);
@@ -30,14 +39,6 @@ public class LoginPage {
 	XSSFSheet sheet = wb.getSheet("loginUsuario");
 	
 	int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();	
-		
-	
-	public LoginPage(WebDriver browser)  throws IOException {
-		this.browser = browser;
-		wait = new WebDriverWait(browser, Duration.ofSeconds(10));
-		PageFactory.initElements(browser, this);
-
-	}
 	
 	@FindBy(how = How.LINK_TEXT, using = "CREATE NEW ACCOUNT")
 	private WebElement criarNovaConta;	
@@ -62,10 +63,11 @@ public class LoginPage {
 	}
 
 	public void preencheComOsDados(int numeroLinha) {
-					
-		nomeUsuario.sendKeys(sheet.getRow(numeroLinha).getCell(0).getStringCellValue());
-		senhaUsuario.sendKeys(sheet.getRow(numeroLinha).getCell(1).getStringCellValue());
-	
+			
+		wait.until(ExpectedConditions.elementToBeClickable(nomeUsuario))
+						.sendKeys(sheet.getRow(numeroLinha).getCell(0).getStringCellValue());
+		senhaUsuario.sendKeys(sheet.getRow(numeroLinha).getCell(1).getStringCellValue());				
+		
 		btnLogin.click();	
 	}
 	
