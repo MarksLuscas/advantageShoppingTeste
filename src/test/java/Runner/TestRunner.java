@@ -7,6 +7,8 @@ import io.cucumber.junit.CucumberOptions;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(features = "classpath:feature",
-					glue= {"TestSteps"})	
+					glue= {"pageSteps"},
+					plugin= {"pretty"}, //usage
+					monochrome = true)	
 public class TestRunner {
 }

@@ -15,7 +15,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import dataProvider.ConfigFileReader;
+import selenium.Wait;
+
 
 public class LoginPage {
 	
@@ -40,7 +41,7 @@ public class LoginPage {
 	
 	int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();	
 	
-	@FindBy(how = How.LINK_TEXT, using = "CREATE NEW ACCOUNT")
+	@FindBy(how = How.CSS, using = ".create-new-account.ng-scope")
 	private WebElement criarNovaConta;	
 	
 	@FindBy(how = How.NAME, using = "username")
@@ -57,15 +58,17 @@ public class LoginPage {
 	
 	public RegisterPage clicaParaIrParaAPaginaDeCadastro() throws IOException {
 							
-		wait.until(ExpectedConditions.elementToBeClickable(criarNovaConta)).click();
+		wait.until(ExpectedConditions.
+				elementToBeClickable(criarNovaConta)).click();
 		
 		return new RegisterPage(browser);	
 	}
 
 	public void preencheComOsDados(int numeroLinha) {
 			
-		wait.until(ExpectedConditions.elementToBeClickable(nomeUsuario))
-						.sendKeys(sheet.getRow(numeroLinha).getCell(0).getStringCellValue());
+		Wait.untilPageLoadComplete(browser);
+
+		nomeUsuario.sendKeys(sheet.getRow(numeroLinha).getCell(0).getStringCellValue());
 		senhaUsuario.sendKeys(sheet.getRow(numeroLinha).getCell(1).getStringCellValue());				
 		
 		btnLogin.click();	

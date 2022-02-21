@@ -3,6 +3,7 @@ package TestPages;
 import java.io.IOException;
 import java.time.Duration;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -24,7 +25,6 @@ public class HomePage {
 		this.browser = browser;
 		wait = new WebDriverWait(browser, Duration.ofSeconds(10));
 		PageFactory.initElements(browser, this);
-
 	}
 	
 	@FindBy(how = How.XPATH, using = "/html/body/div[2]")
@@ -102,7 +102,17 @@ public class HomePage {
 		wait.until(
 				ExpectedConditions.invisibilityOf(logger));
 				
-		menuSearch.click();
+		menuSearch.click();	
+	}
+	
+	public boolean estaLogadoComOCadastroNovo() {
+
+	boolean nome = wait.until(ExpectedConditions.
+			visibilityOfElementLocated(
+					By.cssSelector(
+							".hi-user.containMiniTitle.ng-binding"))).
+																isDisplayed();
 		
+		return nome;			
 	}
 }

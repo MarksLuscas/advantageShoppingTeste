@@ -19,11 +19,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import dataProvider.ConfigFileReader;
+import selenium.Wait;
 
 public class RegisterPage {
 		
-	private WebDriver browser;
+	WebDriver browser;
 	private WebDriverWait wait;
 //	private ConfigFileReader configFileReader;
 	
@@ -92,9 +92,10 @@ public class RegisterPage {
 	
 	//METODOS	
 	public void preencheOsDados(int numeroLinha) {
-		wait.until(ExpectedConditions.
-				elementToBeClickable(nome)).
-						sendKeys(sheet.getRow(numeroLinha).getCell(0).getStringCellValue());
+								
+		Wait.untilPageLoadComplete(browser);
+		
+		nome.sendKeys(sheet.getRow(numeroLinha).getCell(0).getStringCellValue());
 		email.sendKeys(sheet.getRow(numeroLinha).getCell(1).getStringCellValue());
 		senha.sendKeys(sheet.getRow(numeroLinha).getCell(2).getStringCellValue());
 		confirmaSenha.sendKeys(sheet.getRow(numeroLinha).getCell(3).getStringCellValue());
@@ -120,21 +121,11 @@ public class RegisterPage {
 	i_agreeBtn.click();
 	
 	//BOTAO DE REGISTRAR			
+
 	wait.until(
-			ExpectedConditions.elementToBeClickable(registerBtn)).click();
-			
+			ExpectedConditions.elementToBeClickable(registerBtn)).click();		
 	}
 
-	public boolean estaLogadoComOCadastroNovo() {
-
-	boolean nome = wait.until(ExpectedConditions.
-			visibilityOfElementLocated(
-					By.cssSelector(
-							".hi-user.containMiniTitle.ng-binding"))).
-																isDisplayed();
-		
-		return nome;			
-	}
 
 	public boolean mensagemDeEmailInvalido() {
 		
@@ -144,7 +135,6 @@ public class RegisterPage {
 		
 			return texto;
 	}
-
 
 	public boolean mensagensDeErro() {
 
@@ -184,5 +174,4 @@ public class RegisterPage {
 		action.build().perform();
 		
 	}
-	
 }
