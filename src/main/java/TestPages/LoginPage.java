@@ -56,10 +56,16 @@ public class LoginPage {
 	@FindBy(how = How.ID, using = "signInResultMessage")
 	private WebElement msgDeLoginErrado;
 	
+	@FindBy(how = How.XPATH, using = "/html/body/div[2]")
+	private WebElement logger;
+	
 	public RegisterPage clicaParaIrParaAPaginaDeCadastro() throws IOException {
-							
-		wait.until(ExpectedConditions.
-				elementToBeClickable(criarNovaConta)).click();
+	
+		Wait.untilPageLoadComplete(browser);
+		
+		wait.until(ExpectedConditions.invisibilityOf(logger));		
+		
+		criarNovaConta.click();
 		
 		return new RegisterPage(browser);	
 	}
@@ -68,6 +74,8 @@ public class LoginPage {
 			
 		Wait.untilPageLoadComplete(browser);
 
+		wait.until(ExpectedConditions.invisibilityOf(logger));	
+		
 		nomeUsuario.sendKeys(sheet.getRow(numeroLinha).getCell(0).getStringCellValue());
 		senhaUsuario.sendKeys(sheet.getRow(numeroLinha).getCell(1).getStringCellValue());				
 		

@@ -1,4 +1,4 @@
-package pageSteps;
+package steps;
 
 import java.io.IOException;
 
@@ -8,13 +8,13 @@ import TestPages.ProdutoPage;
 import cucumber.TestContext;
 import io.cucumber.java.pt.Entao;
 
-public class ProdutoPageSteps {
+public class PesquisaProdutoSteps {
 
 	
 	TestContext testContext;
 	ProdutoPage produtoPage;
 	
-	public ProdutoPageSteps(TestContext context)	{
+	public PesquisaProdutoSteps(TestContext context)	{
 		testContext = context;
 		produtoPage = testContext.getPageObjectManager().getProdutoPage();
 	}

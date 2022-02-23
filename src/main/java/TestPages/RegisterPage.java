@@ -19,6 +19,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import managers.FileReaderManager;
 import selenium.Wait;
 
 public class RegisterPage {
@@ -156,10 +157,11 @@ public class RegisterPage {
 
 	public void preencheOCampoDeEmail(int numeroLinha) {
 		
+		Wait.untilPageLoadComplete(browser);
+				
 		Actions action = new Actions(browser);
 		
-		wait.until(ExpectedConditions.elementToBeClickable(nome)).click();
-//		nome.click();
+		nome.click();
 			
 		action.sendKeys(Keys.TAB);
 		

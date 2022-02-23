@@ -1,4 +1,4 @@
-package pageSteps;
+package steps;
 
 import java.io.IOException;
 
@@ -9,13 +9,13 @@ import cucumber.TestContext;
 import io.cucumber.java.pt.E;
 import io.cucumber.java.pt.Entao;
 
-public class LoginPageSteps {
+public class LoginSteps {
 
 	
 	TestContext testContext;
 	LoginPage loginPage;
 	
-	public LoginPageSteps(TestContext context) throws IOException {
+	public LoginSteps(TestContext context) throws IOException {
 		testContext = context;
 		loginPage = testContext.getPageObjectManager().getLoginPage();
 	}

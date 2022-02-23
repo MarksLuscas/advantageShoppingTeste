@@ -15,6 +15,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 import managers.FileReaderManager;
+import selenium.Wait;
 
 public class HomePage {
 	
@@ -52,9 +53,12 @@ public class HomePage {
 	}
 	
 	public LoginPage vaiParaAPaginaDeLogin() throws IOException {
-	
-		wait.until(ExpectedConditions.visibilityOf(logger));
-		wait.until(ExpectedConditions.invisibilityOf(logger));
+		
+//		wait.until(ExpectedConditions.visibilityOf(logger));
+		
+		Wait.untilPageLoadComplete(browser);
+
+//		wait.until(ExpectedConditions.invisibilityOf(logger));
 		wait.until(ExpectedConditions.elementToBeClickable(menu)).click();
 		
 		return new LoginPage(browser);

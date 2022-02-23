@@ -1,4 +1,4 @@
-package pageSteps;
+package steps;
 
 import java.io.IOException;
 
@@ -11,12 +11,12 @@ import io.cucumber.java.pt.E;
 import io.cucumber.java.pt.Entao;
 import io.cucumber.java.pt.Quando;
 
-public class HomePageSteps {
+public class HomeSteps {
 	
 	TestContext testContext;
 	HomePage homePage;
 	
-	public HomePageSteps(TestContext context) {
+	public HomeSteps(TestContext context) {
 		testContext = context;
 		homePage = testContext.getPageObjectManager().getHomePage();
 	}
