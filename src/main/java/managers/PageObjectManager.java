@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 
 import TestPages.HomePage;
 import TestPages.LoginPage;
-import TestPages.ProdutoPage;
+import TestPages.ProductPage;
 import TestPages.RegisterPage;
 
 public class PageObjectManager {
@@ -14,7 +14,7 @@ public class PageObjectManager {
 	private WebDriver driver;
 	private HomePage homePage;
 	private LoginPage loginPage;
-	private ProdutoPage produtoPage;
+	private ProductPage produtoPage;
 	private RegisterPage registerPage;
 	
 	public PageObjectManager(WebDriver driver) {
@@ -33,8 +33,8 @@ public class PageObjectManager {
 		return (registerPage == null) ? registerPage = new RegisterPage(driver) : registerPage;
 	}
 	
-	public ProdutoPage getProdutoPage(){
-		return (produtoPage == null) ?	produtoPage = new ProdutoPage(driver) : produtoPage;
+	public ProductPage getProductPage(){
+		return (produtoPage == null) ?	produtoPage = new ProductPage(driver) : produtoPage;
 	}
 
 	

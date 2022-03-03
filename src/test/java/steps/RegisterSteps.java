@@ -22,14 +22,42 @@ public class RegisterSteps {
 		
 	@E("coloca seus dados na pagina de cadastro")
 		public void coloca_seus_dados_na_pagina_de_cadastro() {
-		registerPage.preencheOsDados(1);
+		registerPage.preencheONome(1);
+		registerPage.preencheOEmail(1);
+		registerPage.preencheASenha(1);
+		registerPage.preencheAConfirmacaoDeSenha(1);
+		registerPage.preencheOPrimeiroNome(1);
+		registerPage.preencheOSegundoNome(1);
+		registerPage.preencheOTelefone(1);
+		registerPage.escolheOPais();
+		registerPage.preencheACidade(1);
+		registerPage.preencheOEndereco(1);
+		registerPage.preencheOEstado(1);
+		registerPage.preencheOCodigoPostal(1);
+		
+		registerPage.clicaBotaoDeConfirmaCondicao();
+		registerPage.clicaBotaoSeRegistrar();
 	}
 	
 	// segundo cenario
 		
 	@E("o usuario coloca um valor invalido no campo de email")
 	public void o_usuario_coloca_um_valor_invalido_no_campo_de_email() {
-		registerPage.preencheOsDados(2);
+		registerPage.preencheONome(2);
+		registerPage.preencheOEmail(2);
+		registerPage.preencheASenha(2);
+		registerPage.preencheAConfirmacaoDeSenha(2);
+		registerPage.preencheOPrimeiroNome(2);
+		registerPage.preencheOSegundoNome(2);
+		registerPage.preencheOTelefone(2);
+		registerPage.escolheOPais();
+		registerPage.preencheACidade(2);
+		registerPage.preencheOEndereco(2);
+		registerPage.preencheOEstado(2);
+		registerPage.preencheOCodigoPostal(2);
+		
+		registerPage.clicaBotaoDeConfirmaCondicao();
+		registerPage.clicaBotaoSeRegistrar();
 	}
 		
 	@Entao("recebe uma mensagem de email invalido")

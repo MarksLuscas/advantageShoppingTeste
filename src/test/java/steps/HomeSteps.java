@@ -22,7 +22,6 @@ public class HomeSteps {
 	}
 	
 	// cadastro step
-	
 	@Dado("usuario vai para o site escolhido")
 	public void usuario_vai_para_o_site_escolhido() {
 		homePage.paginaInicial();	

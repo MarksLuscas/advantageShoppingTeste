@@ -50,6 +50,7 @@ public class HomePage {
 	public void paginaInicial() {
 		browser.get(FileReaderManager.getInstance().getConfigReader().getApplicationUrl());
 		browser.manage().window().maximize();
+		Wait.untilPageLoadComplete(browser);
 	}
 	
 	public LoginPage vaiParaAPaginaDeLogin() throws IOException {
@@ -64,31 +65,27 @@ public class HomePage {
 		return new LoginPage(browser);
 	}
 
-	public ProdutoPage pesquisaItem(String produto){
-		
-		//vai para pagina direto pela URL
-//		browser.get(FileReaderManager.getInstance().getConfigReader().getApplicationUrl() + "product/7");
-				
+	public ProductPage pesquisaItem(String produto){
+
+//		autoComplete.sendKeys(produto);
+//					
+//		autoComplete.clear();
 		autoComplete.sendKeys(produto);
-		
-		wait.until(ExpectedConditions.invisibilityOf(logger));
-				
-		wait.until(ExpectedConditions.elementToBeClickable(produtoNoMenu)).click();
-		
 		autoComplete.clear();
+		
 		autoComplete.sendKeys(produto);
 		
-		wait.until(ExpectedConditions.elementToBeClickable(produtoNoMenu)).click();
+		produtoNoMenu.click();
 		
-	   	return new ProdutoPage(browser);	
+	   	return new ProductPage(browser);	
 }
 
-	public ProdutoPage pesquisaItemErrado(String produto) {
+	public ProductPage pesquisaItemErrado(String produto) {
 			
 		autoComplete.sendKeys(produto);
 		autoComplete.sendKeys(Keys.ENTER);	
 		
-		return new ProdutoPage(browser);
+		return new ProductPage(browser);
 	}
 
 	public boolean estaLogado() {
@@ -101,10 +98,14 @@ public class HomePage {
 
 	public void clicaParaFazerUmaBusca() {
 
+		
 		wait.until(
 				ExpectedConditions.visibilityOf(logger));
-		wait.until(
+		wait.until( 
 				ExpectedConditions.invisibilityOf(logger));
+		
+
+		Wait.untilPageLoadComplete(browser);
 				
 		menuSearch.click();	
 	}

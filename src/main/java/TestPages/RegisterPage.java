@@ -25,20 +25,16 @@ import selenium.Wait;
 public class RegisterPage {
 		
 	WebDriver browser;
-	private WebDriverWait wait;
-//	private ConfigFileReader configFileReader;
-	
+	private WebDriverWait wait;	
 	
 	public RegisterPage(WebDriver browser) throws IOException {
 		this.browser = browser;
 		wait = new WebDriverWait(browser, Duration.ofSeconds(10));
 		PageFactory.initElements(browser, this);
-//		configFileReader = new ConfigFileReader();
 	}
 
-	File file = new File("C:\\Users\\lucas.corticeiro\\eclipse-workspace\\AdvantageTestes\\src\\test\\resources\\excelUtil\\paginaUsuario.xlsx");
-	//path original -> C:\\Users\\lucas.corticeiro\\eclipse-workspace\\AdvantageTestes\\src\\test\\resources\\excelUtil\\paginaUsuario.xlsx
-		
+	File file = new File(FileReaderManager.getInstance().getConfigReader().getExcelDeNovoCadastro());
+			
 	FileInputStream inputStream = new FileInputStream(file);
 	
 	XSSFWorkbook wb = new XSSFWorkbook(inputStream);
@@ -92,42 +88,62 @@ public class RegisterPage {
 	private WebElement countryListBox;
 	
 	//METODOS	
-	public void preencheOsDados(int numeroLinha) {
-								
-		Wait.untilPageLoadComplete(browser);
 		
+	public void preencheONome(int numeroLinha) {
+		Wait.untilPageLoadComplete(browser);
 		nome.sendKeys(sheet.getRow(numeroLinha).getCell(0).getStringCellValue());
+	}	
+	public void preencheOEmail(int numeroLinha) {
 		email.sendKeys(sheet.getRow(numeroLinha).getCell(1).getStringCellValue());
+	}
+	public void preencheASenha(int numeroLinha) {
 		senha.sendKeys(sheet.getRow(numeroLinha).getCell(2).getStringCellValue());
+	}
+	public void preencheAConfirmacaoDeSenha(int numeroLinha) {
 		confirmaSenha.sendKeys(sheet.getRow(numeroLinha).getCell(3).getStringCellValue());
+	}
+	public void preencheOPrimeiroNome(int numeroLinha) {
 		primeiroNome.sendKeys(sheet.getRow(numeroLinha).getCell(4).getStringCellValue());
+	}
+	public void preencheOSegundoNome(int numeroLinha) {
 		segundoNome.sendKeys(sheet.getRow(numeroLinha).getCell(5).getStringCellValue());
+	}
+	public void preencheOTelefone(int numeroLinha) {
 		telefone.sendKeys(sheet.getRow(numeroLinha).getCell(6).getStringCellValue());
-
+	}
+	public void escolheOPais() {
 		countryListBox.click();
-	
+		
 		wait.until(ExpectedConditions.visibilityOfElementLocated(
 							By.cssSelector("option[label='Afganistan']")));
 
 		Select select = new Select(countryListBox);
 		select.selectByVisibleText("Brazil");
-				
-		cidade.sendKeys(sheet.getRow(numeroLinha).getCell(7).getStringCellValue());
-		endereco.sendKeys(sheet.getRow(numeroLinha).getCell(8).getStringCellValue());
-		estado.sendKeys(sheet.getRow(numeroLinha).getCell(9).getStringCellValue());
-		codigoPostal.sendKeys(sheet.getRow(numeroLinha).getCell(10).getStringCellValue());
-
-	
-	//BOTAO DE CONFIRMA A CONDICAO DE PRIVACIDADE 
-	i_agreeBtn.click();
-	
-	//BOTAO DE REGISTRAR			
-
-	wait.until(
-			ExpectedConditions.elementToBeClickable(registerBtn)).click();		
 	}
-
-
+	public void preencheACidade(int numeroLinha) {
+		cidade.sendKeys(sheet.getRow(numeroLinha).getCell(7).getStringCellValue());
+	}
+	public void preencheOEndereco(int numeroLinha) {
+		endereco.sendKeys(sheet.getRow(numeroLinha).getCell(8).getStringCellValue());
+	}
+	public void preencheOEstado(int numeroLinha) {
+		estado.sendKeys(sheet.getRow(numeroLinha).getCell(9).getStringCellValue());
+	}
+	public void preencheOCodigoPostal(int numeroLinha) {
+		codigoPostal.sendKeys(sheet.getRow(numeroLinha).getCell(10).getStringCellValue());
+	}
+			
+	//BOTAO DE CONFIRMA A CONDICAO DE PRIVACIDADE 
+	public void clicaBotaoDeConfirmaCondicao() {
+		i_agreeBtn.click();
+	}
+	
+	//BOTAO DE REGISTRAR
+	public void clicaBotaoSeRegistrar() {
+		wait.until(
+				ExpectedConditions.elementToBeClickable(registerBtn)).click();	
+	}
+				
 	public boolean mensagemDeEmailInvalido() {
 		
 		boolean texto = wait.until(ExpectedConditions.
@@ -161,7 +177,7 @@ public class RegisterPage {
 				
 		Actions action = new Actions(browser);
 		
-		nome.click();
+		nome.click();	
 			
 		action.sendKeys(Keys.TAB);
 		
@@ -174,6 +190,5 @@ public class RegisterPage {
 		action.moveToElement(email).click();
 		
 		action.build().perform();
-		
 	}
 }

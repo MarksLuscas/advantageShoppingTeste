@@ -56,6 +56,7 @@ public class ConfigFileReader {
 		if(browserName == null || browserName.equals("chrome")) return DriverType.CHROME;
 		else if(browserName.equalsIgnoreCase("firefox")) return DriverType.FIREFOX;
 		else if(browserName.equals("iexplorer")) return DriverType.INTERNETEXPLORER;
+		else if(browserName.equals("edge")) return DriverType.EDGE;
 		else throw new RuntimeException("Browser Name Key value in Configuration.properties is not matched : " + browserName);
 	}
 	
@@ -76,4 +77,17 @@ public class ConfigFileReader {
 		}
 		return 30;		
 	}
+	
+	public String getExcelDeNovoCadastro() {
+		String excelDeNovoCadastro = properties.getProperty("excelCadastroUsuario");
+		if(excelDeNovoCadastro!= null) return excelDeNovoCadastro;
+		else throw new RuntimeException("application url not specified in the Configuration.properties file ");
+	}
+	
+	public String getExcelDeLogin() {
+		String excelDeLogin = properties.getProperty("excelLoginUsuario");
+		if(excelDeLogin!= null) return excelDeLogin;
+		else throw new RuntimeException("application url not specified in the Configuration.properties file ");
+	}
+	
 }

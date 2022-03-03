@@ -11,11 +11,9 @@ public class Hooks {
 		testContext = context;
 	}
 
-
 	@After
 	public void AfterSteps() {
 		testContext.getWebDriverManager().closeDriver();
 	}
-	
-	
+
 }

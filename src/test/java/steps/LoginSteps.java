@@ -31,7 +31,9 @@ public class LoginSteps {
 	
 	@E("coloca seus dados")
 	public void coloca_seus_dados() {
-		loginPage.preencheComOsDados(1);
+		loginPage.preencheComOCampoDeNome(1);
+		loginPage.preencheOCampoDeSenha(1);
+		loginPage.clicaBotaoDeLogin();
 	}
 	
 	
@@ -39,7 +41,9 @@ public class LoginSteps {
 	
 	@E("coloca os dados invalidos")
 	public void coloca_os_dados_invalidos() {
-		loginPage.preencheComOsDados(2);
+		loginPage.preencheComOCampoDeNome(2);
+		loginPage.preencheOCampoDeSenha(2);
+		loginPage.clicaBotaoDeLogin();
 	}
 		
 	@Entao("recebe uma mensagem de erro")

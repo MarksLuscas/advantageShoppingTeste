@@ -15,6 +15,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import managers.FileReaderManager;
 import selenium.Wait;
 
 
@@ -22,17 +23,15 @@ public class LoginPage {
 	
 	private WebDriverWait wait;
 	private WebDriver browser;
-	//private ConfigFileReader configFileReader;
 
 	public LoginPage(WebDriver browser)  throws IOException {
 		this.browser = browser;
 		wait = new WebDriverWait(browser, Duration.ofSeconds(10));
 		PageFactory.initElements(browser, this);
-//		configFileReader = new ConfigFileReader();
 	}
 
-	File file = new File("C:\\Users\\lucas.corticeiro\\eclipse-workspace\\AdvantageTestes\\src\\test\\resources\\excelUtil\\loginUsuario.xlsx");
-	//path original -> C:\\Users\\lucas.corticeiro\\eclipse-workspace\\AdvantageTestes\\src\\test\\resources\\excelUtil\\loginUsuario.xlsx
+	File file = new File(FileReaderManager.getInstance().getConfigReader().getExcelDeLogin());
+
 	FileInputStream inputStream = new FileInputStream(file);
 	
 	XSSFWorkbook wb = new XSSFWorkbook(inputStream);
@@ -56,29 +55,32 @@ public class LoginPage {
 	@FindBy(how = How.ID, using = "signInResultMessage")
 	private WebElement msgDeLoginErrado;
 	
-	@FindBy(how = How.XPATH, using = "/html/body/div[2]")
+	@FindBy(how = How.CLASS_NAME, using = "loader")
 	private WebElement logger;
 	
 	public RegisterPage clicaParaIrParaAPaginaDeCadastro() throws IOException {
-	
-		Wait.untilPageLoadComplete(browser);
-		
+
+		wait.until(ExpectedConditions.visibilityOf(logger));
 		wait.until(ExpectedConditions.invisibilityOf(logger));		
-		
+
 		criarNovaConta.click();
 		
 		return new RegisterPage(browser);	
 	}
 
-	public void preencheComOsDados(int numeroLinha) {
+	public void preencheComOCampoDeNome(int numeroLinha) {
 			
 		Wait.untilPageLoadComplete(browser);
 
-		wait.until(ExpectedConditions.invisibilityOf(logger));	
-		
 		nomeUsuario.sendKeys(sheet.getRow(numeroLinha).getCell(0).getStringCellValue());
+	}
+	
+	public void preencheOCampoDeSenha(int numeroLinha) {
 		senhaUsuario.sendKeys(sheet.getRow(numeroLinha).getCell(1).getStringCellValue());				
-		
+	}
+	
+	public void clicaBotaoDeLogin(){
+		wait.until(ExpectedConditions.invisibilityOf(logger));
 		btnLogin.click();	
 	}
 	
@@ -89,7 +91,4 @@ public class LoginPage {
 				
 		return msgDeErro;
 	}
-	
-	
-
 }
