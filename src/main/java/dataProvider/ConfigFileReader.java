@@ -32,12 +32,6 @@ public class ConfigFileReader {
 		}	
 	}
 	
-	public String getDriverPath() {
-		String driverPath = properties.getProperty("driverPath");
-		if(driverPath!= null) return driverPath;
-		else throw new RuntimeException("driverPath not specified in the Configuration.properties file ");
-	}
-	
 	public String getApplicationUrl() {
 		String url = properties.getProperty("url");
 		if(url!= null) return url;
@@ -54,7 +48,7 @@ public class ConfigFileReader {
 	public DriverType getBrowser() {
 		String browserName = properties.getProperty("browser");
 		if(browserName == null || browserName.equals("chrome")) return DriverType.CHROME;
-		else if(browserName.equalsIgnoreCase("firefox")) return DriverType.FIREFOX;
+		else if(browserName.equals("firefox")) return DriverType.FIREFOX;
 		else if(browserName.equals("iexplorer")) return DriverType.INTERNETEXPLORER;
 		else if(browserName.equals("edge")) return DriverType.EDGE;
 		else throw new RuntimeException("Browser Name Key value in Configuration.properties is not matched : " + browserName);

@@ -54,16 +54,11 @@ public class HomePage {
 	}
 	
 	public LoginPage vaiParaAPaginaDeLogin() throws IOException {
-		
-//		wait.until(ExpectedConditions.visibilityOf(logger));
-		
-		Wait.untilPageLoadComplete(browser);
 
-//		wait.until(ExpectedConditions.invisibilityOf(logger));
-		wait.until(ExpectedConditions.elementToBeClickable(menu)).click();
-		
-		return new LoginPage(browser);
-	}
+			wait.until(ExpectedConditions.elementToBeClickable(menu)).click();
+			
+			return new LoginPage(browser);
+}
 
 	public ProductPage pesquisaItem(String produto){
 
@@ -75,8 +70,8 @@ public class HomePage {
 		
 		autoComplete.sendKeys(produto);
 		
-		produtoNoMenu.click();
-		
+		wait.until(ExpectedConditions.elementToBeClickable(produtoNoMenu)).click();
+
 	   	return new ProductPage(browser);	
 }
 

@@ -62,7 +62,9 @@ public class LoginPage {
 
 		wait.until(ExpectedConditions.visibilityOf(logger));
 		wait.until(ExpectedConditions.invisibilityOf(logger));		
-
+		
+		wait.until(ExpectedConditions.elementToBeClickable(nomeUsuario));
+		
 		criarNovaConta.click();
 		
 		return new RegisterPage(browser);	
@@ -80,7 +82,10 @@ public class LoginPage {
 	}
 	
 	public void clicaBotaoDeLogin(){
+		wait.until(ExpectedConditions.visibilityOf(logger));
+		
 		wait.until(ExpectedConditions.invisibilityOf(logger));
+		
 		btnLogin.click();	
 	}
 	
